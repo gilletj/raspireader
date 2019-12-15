@@ -13,9 +13,7 @@ class RaspiReader():
 
         # APPLICATION SETTINGS
         self.app_font = QFont("Roboto", 11)
-        self.save_file_extension = '.png'
-        self.use_countdown = True
-        self.countdown_length = 3
+        self.countdown_length = 0
 
         # build layout
         self.layout = self.init_ui()
@@ -47,10 +45,7 @@ class RaspiReader():
         self.file_name_edit_text.setPlaceholderText('Enter export file name')
         self.file_name_edit_text.setFont(self.app_font)
         self.file_name_edit_text.textChanged.connect(self.disable_widgets)
-        self.file_name_extension_label = QLabel(self.save_file_extension)
-        self.file_name_extension_label.setFont(self.app_font)
         edit_text_layout.addWidget(self.file_name_edit_text)
-        edit_text_layout.addWidget(self.file_name_extension_label)
         save_layout.addLayout(edit_text_layout)
 
         # layout to show preview text/image
@@ -98,13 +93,12 @@ class RaspiReader():
 
     def countdown_and_capture(self):
         # display countdown
-        if self.use_countdown:
-            for number in range(0, self.countdown_length):
-                self.preview_window.setText(str(self.countdown_length - number))
-                sleep(1)
+        for number in range(0, self.countdown_length):
+            self.preview_window.setText(str(self.countdown_length - number))
+            sleep(1)
 
         # show preview
-        pixmap = QPixmap('test.png')
+        pixmap = QPixmap('fingerprint.jpg')
         scaled_pixmap = pixmap.scaled(300, 350)
         self.preview_window.setContentsMargins(0, 0, 0, 0)
         self.preview_window.setPixmap(scaled_pixmap)
@@ -123,21 +117,19 @@ class RaspiReader():
         # disable list where:
         # disable_list[0] represents select export directory button        
         # disable_list[1] represents export file name edit text        
-        # disable_list[2] represents export file name extension       
         # disable_list[3] represents start capture button       
         # disable_list[4] represents capture preview view        
-        disable_list = [False, False, False, False, False]
+        disable_list = [False, False, False, False]
 
         # set disable_list values based on view contents
         if self.save_directory_button.text() == 'Select export directory':
-            disable_list = [False, True, True, True, True]  # disable export file name edit text and label, start capture button, capture preview view
+            disable_list = [False, True, True, True]  # disable export file name edit text, start capture button, capture preview view
         elif self.file_name_edit_text.text() == '':
-            disable_list = [False, False, True, True, True]  # disable start capture button, capture preview view
+            disable_list = [False, False, True, True]  # disable start capture button, capture preview view
         self.layout.itemAt(0).itemAt(0).widget().setDisabled(disable_list[0])
         self.layout.itemAt(0).itemAt(1).itemAt(0).widget().setDisabled(disable_list[1])
-        self.layout.itemAt(0).itemAt(1).itemAt(1).widget().setDisabled(disable_list[2])
-        self.layout.itemAt(1).itemAt(0).widget().setDisabled(disable_list[3])
-        self.layout.itemAt(1).itemAt(1).widget().setDisabled(disable_list[4])
+        self.layout.itemAt(1).itemAt(0).widget().setDisabled(disable_list[2])
+        self.layout.itemAt(1).itemAt(1).widget().setDisabled(disable_list[3])
 
 
 if __name__ == '__main__':
