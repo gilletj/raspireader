@@ -1,0 +1,19 @@
+Raspireader operation steps (no GUI involved):
+1. Power the Raspberry Pi and connect to a display.
+2. Connect one RaspiCam module to the Camera A port on the Ardocam adapter with the ribbon cable.
+3. Connect one RaspiCam module to the Camera C port on the Ardocam adapter with the ribbon cable.
+4. Connect the Ardocam adapter to the Raspberry Pi with the ribbon cable.
+5. Connect the Ardocam adapter to the Raspberry Pi by the GPIO ports.
+6. Open a terminal.
+7. Activate the Anaconda environment by typing 'source activate raspireader'
+8. Go to RaspiReader-master/RaspiReaderCapture/ where capture1.py should reside.
+9. Run python capture1.py
+10. The first capture should be successful, at the time of writing the second capture (Camera C) is not working.
+
+GPIO usage:
+The GPIO ports on the Raspberry Pi can be used by the Ardocam adapter to switch between cameras. Below are the 
+configurations for Camera A and Camera C.
+    Camera A: Port 7 = false, port 11 = false, port 12 = true
+    Camera C: Port 7 = false, port 11 = true, port 12 = false
+The configurations for the other ports can be viewed on the paper directions for the Ardocam adapter.
+The RaspiReader Python code sets these values in lines 53-55 and 65-67.
