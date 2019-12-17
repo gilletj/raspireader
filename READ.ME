@@ -17,3 +17,8 @@ configurations for Camera A and Camera C.
     Camera C: Port 7 = false, port 11 = true, port 12 = false
 The configurations for the other ports can be viewed on the paper directions for the Ardocam adapter.
 The RaspiReader Python code sets these values in lines 53-55 and 65-67.
+
+Unfinished work:
+On the main Raspberry Pi I was using, PyQt5 was not able to be installed. However I was able to install it on other Raspberry Pi devices. The command to do this is:
+	sudo apt-get install python3-pyqt5
+Once there is a single Raspberry Pi device with the conda envrionment and PyQt5 setup, the only thing that needs to be done is linking the GUI with the Raspireader code. This sould be as easy as imporing the capture1.py into the GUI, and connecting the core function to a button that spawns a separate thread. An example of this is done in the GUI already with the countdown.
